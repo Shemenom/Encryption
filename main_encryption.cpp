@@ -3,15 +3,18 @@
 #include <functional>
 #include "algorithm.h"
 
+using namespace std::chrono;
+using namespace std;
+
 // это не трогать !!!
 template<typename Func, typename... Args>
 auto Time(Func&& func, Args&&... args) {
-    auto start = std::chrono::high_resolution_clock::now();
+    auto start = chrono::high_resolution_clock::now();
     
-    std::invoke(std::forward<Func>(func), std::forward<Args>(args)...);
+    std::invoke(forward<Func>(func), forward<Args>(args)...);
     
-    auto end = std::chrono::high_resolution_clock::now();
-    return std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    auto end = high_resolution_clock::now();
+    return chrono::duration_cast< microseconds>(end - start);
 }
 
 int main() {
