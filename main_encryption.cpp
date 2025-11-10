@@ -86,3 +86,62 @@ long long ElGamalUniversal::generate_prime(long long min_val, long long max_val)
     }
     return 0; 
 }
+
+long long ElGamalUniversal::find_primitive_root(long long p) {
+    if (p == 2) return 1;
+    long long phi = p - 1;
+    vector<long long> factors;
+
+    long long n = phi;
+    for (long long i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            factors.push_back(i);
+            while (n % i == 0) n /= i;
+        }
+    }
+    if (n > 1) factors.push_back(n);
+
+    for (long long g = 2; g < p; g++) {
+        bool ok = true;
+        for (long long factor : factors) {
+            if (mod_pow(g, phi / factor, p) == 1) {
+                ok = false;
+                break;
+            }
+        }
+        if (ok) return g;
+    }
+    return 2;
+}
+
+long long ElGamalUniversal::gcd(long long a, long long b) {
+    while (b != 0) {
+        long long temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+ElGamalUniversal::ElGamalUniversal(string size) : gen(rd()) {
+    if (size == "small") {
+        p = generate_prime(1000, 10000);
+    }
+    else if (size == "huge") {
+        p = generate_prime(1000000000, 5000000000);
+    }
+    else {
+        p = generate_prime(10000, 100000);
+    }
+
+    if (p == 0) {
+        cout << "Ошибка: не удалось сгенерировать простое число" << endl;
+        return;
+    }
+
+    g = find_primitive_root(p);
+    uniform_int_distribution<long long> dis(2, p - 2);
+    x = dis(gen);  
+    y = mod_pow(g, x, p); 
+}
+
