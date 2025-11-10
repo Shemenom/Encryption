@@ -19,7 +19,17 @@ auto Time(Func&& func, Args&&... args) {
 
 int main() {
     // здесь проверяйте свой код
+    cout << "=== ТЕСТИРОВАНИЕ СИСТЕМЫ ELGAMAL ===" << endl << endl;
 
+    vector<long long> small_numbers = { 1, 42, 100, 255, 512, 999, 1024, 2048 };
+    test_small_numbers(small_numbers);
+
+    vector<long long> huge_numbers = { 1000000000, 2500000000 };
+    test_huge_numbers(huge_numbers);
+
+    cout << "=== ТЕСТИРОВАНИЕ ЗАВЕРШЕНО ===" << endl;
+
+    return 0;
 
 }
 
