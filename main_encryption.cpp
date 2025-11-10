@@ -145,3 +145,106 @@ ElGamalUniversal::ElGamalUniversal(string size) : gen(rd()) {
     y = mod_pow(g, x, p); 
 }
 
+pair<long long, long long> ElGamalUniversal::encrypt_number(long long number) {
+    if (number >= p) {
+        cout << "Ошибка: число " << number << " слишком большое. Максимум: " << (p - 1) << endl;
+        return make_pair(0, 0);
+    }
+
+    long long k;
+    uniform_int_distribution<long long> dis(2, p - 2);
+    do {
+        k = dis(gen);
+    } while (gcd(k, p - 1) != 1);
+
+    long long a = mod_pow(g, k, p);
+    long long b = (number * mod_pow(y, k, p)) % p;
+
+    return make_pair(a, b);
+}
+
+long long ElGamalUniversal::decrypt_number(pair<long long, long long> ciphertext) {
+    long long a = ciphertext.first;
+    long long b = ciphertext.second;
+
+    if (a == 0 && b == 0) {
+        cout << "Ошибка: некорректный шифротекст" << endl;
+        return -1;
+    }
+
+    long long s = mod_pow(a, x, p);
+    long long s_inv = mod_pow(s, p - 2, p);
+    long long message = (b * s_inv) % p;
+
+    return message;
+}
+
+void ElGamalUniversal::print_info() {
+    cout << "Параметры системы ElGamal:" << endl;
+    cout << "p: " << p << " (максимальное число: " << (p - 1) << ")" << endl;
+    cout << "g: " << g << endl;
+    cout << "x: " << x << " (закрытый ключ)" << endl;
+    cout << "y: " << y << " (открытый ключ)" << endl;
+    cout << "----------------------------" << endl;
+}
+
+bool ElGamalUniversal::is_valid() {
+    return p != 0;
+}
+
+void test_small_numbers(const vector<long long>& numbers_to_encrypt) {
+    cout << "=== ТЕСТ МАЛЕНЬКИХ ЧИСЕЛ ===" << endl;
+
+    ElGamalUniversal crypto("small");
+
+    crypto.print_info();
+
+    for (long long number : numbers_to_encrypt) {
+        auto encrypted = crypto.encrypt_number(number);
+
+        if (encrypted.first == 0 && encrypted.second == 0) {
+            continue;
+        }
+
+        long long decrypted = crypto.decrypt_number(encrypted);
+
+        if (number == decrypted) {
+            cout << number << " → (" << encrypted.first << ", " << encrypted.second << ")" << endl;
+        }
+        else {
+            cout << "ОШИБКА: " << number << " → " << decrypted << endl;
+        }
+    }
+    cout << endl;
+}
+
+void test_huge_numbers(const vector<long long>& numbers_to_encrypt) {
+    cout << "=== ТЕСТ БОЛЬШИХ ЧИСЕЛ ===" << endl;
+
+    ElGamalUniversal crypto("huge");
+    if (!crypto.is_valid()) {
+        cout << "Ошибка создания криптосистемы" << endl;
+        return;
+    }
+
+    crypto.print_info();
+
+    for (long long number : numbers_to_encrypt) {
+        auto encrypted = crypto.encrypt_number(number);
+
+        if (encrypted.first == 0 && encrypted.second == 0) {
+            continue;
+        }
+
+        long long decrypted = crypto.decrypt_number(encrypted);
+
+        if (number == decrypted) {
+            cout << number << " → (" << encrypted.first << ", " << encrypted.second << ")" << endl;
+        }
+        else {
+            cout << "ОШИБКА: " << number << " → " << decrypted << endl;
+        }
+    }
+    cout << endl;
+}
+
