@@ -13,6 +13,8 @@
 
 using namespace std;
 
+
+// Матвей Хлебников 
 class ElGamalUniversal {
 private:
     long long p, g, x, y;  
