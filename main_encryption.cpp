@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <functional>
+#include "Dolgacheva.cpp"
 #include "algorithm.h"
 
 using namespace std::chrono;
@@ -28,6 +29,11 @@ int main() {
     test_huge_numbers(huge_numbers);
 
     cout << "=== ТЕСТИРОВАНИЕ ЗАВЕРШЕНО ===" << endl;
+
+
+    cout << "\n=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ ===" << endl;
+    demonstrate_stream_cipher();
+    test_stream_performance();
 
     return 0;
 
