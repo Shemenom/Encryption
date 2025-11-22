@@ -1,10 +1,8 @@
 #include <iostream>
 #include <string>
-#include <iostream>
 #include <vector>
 #include <random>
 #include <cmath>
-#include <string>
 #include <algorithm>
 #include <tuple>
 
@@ -12,7 +10,6 @@
 #define ELGAMAL_UNIVERSAL_H
 
 using namespace std;
-
 
 // Матвей Хлебников 
 class ElGamalUniversal {
@@ -46,5 +43,23 @@ public:
 void test_small_numbers(const std::vector<long long>& numbers_to_encrypt);
 
 void test_huge_numbers(const std::vector<long long>& numbers_to_encrypt);
+
+
+// Александра Долгачева (поточное шифрование)
+class SimpleStreamCipher {
+private:
+    unsigned long long current_state;
+    unsigned long long a, c, m;
+
+    char generateKeyByte();
+
+public:
+    SimpleStreamCipher(unsigned long long seed);
+    vector<char> process(const vector<char>& input);
+};
+
+void demonstrate_stream_cipher();
+void test_stream_performance();
+void printVector(const vector<char>& vec, const string& name);
 
 #endif

@@ -30,7 +30,7 @@ int main() {
 
     cout << "=== ТЕСТИРОВАНИЕ ЗАВЕРШЕНО ===" << endl;
 
-
+    // Долгачева Александра
     cout << "\n=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ ===" << endl;
     demonstrate_stream_cipher();
     test_stream_performance();
