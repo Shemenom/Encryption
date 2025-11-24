@@ -1,7 +1,6 @@
 #include <iostream>
 #include <chrono>
 #include <functional>
-#include "Dolgacheva.cpp"
 #include "algorithm.h"
 
 using namespace std::chrono;
@@ -32,8 +31,9 @@ int main() {
 
     // Долгачева Александра
     cout << "\n=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ ===" << endl;
-    demonstrate_stream_cipher();
-    test_stream_performance();
+    test_stream_small_texts();
+    test_stream_large_texts();
+    cout << "=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ ЗАВЕРШЕНО ===" << endl;
 
     return 0;
 

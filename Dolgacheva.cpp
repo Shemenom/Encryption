@@ -29,8 +29,8 @@ vector<char> SimpleStreamCipher::process(const vector<char>& input) {
 }
 
 // Вспомогательная функция для вывода вектора
-void printVector(const vector<char>& vec, const string& name) {
-    cout << name << " (как строка): ";
+void printStreamVector(const vector<char>& vec, const string& name) {
+    cout << name << " (строка): ";
     for (char c : vec) {
         if (c >= 32 && c <= 126) {
             cout << c;
@@ -41,61 +41,78 @@ void printVector(const vector<char>& vec, const string& name) {
     }
     cout << endl;
 
-    cout << name << " (как байты): ";
+    cout << name << " (байты): ";
     for (unsigned char c : vec) {
         cout << static_cast<int>(c) << " ";
     }
     cout << endl << endl;
 }
 
-// Функции тестирования поточного шифрования
-void demonstrate_stream_cipher() {
+// Тест для коротких текстов 
+void test_stream_small_texts() {
+    cout << "=== ТЕСТ ПОТОЧНОГО ШИФРОВАНИЯ (КОРОТКИЕ ТЕКСТЫ) ===" << endl;
+
+    vector<string> texts_to_encrypt = {
+        "Hello",
+        "Test",
+        "Cipher",
+        "Secret",
+        "Message"
+    };
+
     unsigned long long secret_key = 123456789;
 
-    string plaintext = "Hello, Stream Cipher!";
-    vector<char> plaintext_vector(plaintext.begin(), plaintext.end());
+    for (const string& text : texts_to_encrypt) {
+        vector<char> text_vector(text.begin(), text.end());
 
-    cout << "--- Демонстрация поточного шифрования ---\n" << endl;
-    printVector(plaintext_vector, "Исходный текст");
+        // Шифрование
+        SimpleStreamCipher encryptor(secret_key);
+        vector<char> encrypted = encryptor.process(text_vector);
 
-    // ШИФРОВАНИЕ
-    SimpleStreamCipher encryptor(secret_key);
-    vector<char> ciphertext_vector = encryptor.process(plaintext_vector);
-    printVector(ciphertext_vector, "Шифртекст     ");
+        // Дешифрование
+        SimpleStreamCipher decryptor(secret_key);
+        vector<char> decrypted = decryptor.process(encrypted);
+        string result(decrypted.begin(), decrypted.end());
 
-    // РАСШИФРОВКА
-    SimpleStreamCipher decryptor(secret_key);
-    vector<char> decrypted_vector = decryptor.process(ciphertext_vector);
-    printVector(decrypted_vector, "Расшифрованный");
-
-    // Проверка
-    if (equal(plaintext_vector.begin(), plaintext_vector.end(), decrypted_vector.begin())) {
-        cout << "УСПЕХ: Расшифрованный текст совпадает с исходным!" << endl;
+        if (text == result) {
+            cout << text << " -> УСПЕХ" << endl;
+        }
+        else {
+            cout << "ОШИБКА: " << text << " -> " << result << endl;
+        }
     }
-    else {
-        cout << "ОШИБКА: Тексты не совпали!" << endl;
-    }
+    cout << endl;
 }
 
-void test_stream_performance() {
-    cout << "\n=== ТЕСТ ПРОИЗВОДИТЕЛЬНОСТИ ===" << endl;
+// Тест для длинных текстов 
+void test_stream_large_texts() {
+    cout << "=== ТЕСТ ПОТОЧНОГО ШИФРОВАНИЯ (ДЛИННЫЕ ТЕКСТЫ) ===" << endl;
+
+    vector<string> large_texts = {
+        "This is a longer text for testing stream cipher performance with more data",
+        "Another example of substantial text to evaluate encryption efficiency properly"
+    };
 
     unsigned long long secret_key = 987654321;
-    string long_text = "This is a longer text for performance testing of stream cipher algorithm.";
-    vector<char> long_vector(long_text.begin(), long_text.end());
 
-    SimpleStreamCipher cipher(secret_key);
+    for (const string& text : large_texts) {
+        vector<char> text_vector(text.begin(), text.end());
 
-    vector<char> encrypted = cipher.process(long_vector);
+        // Шифрование
+        SimpleStreamCipher encryptor(secret_key);
+        vector<char> encrypted = encryptor.process(text_vector);
 
-    SimpleStreamCipher decipher(secret_key);
-    vector<char> decrypted = decipher.process(encrypted);
+        // Дешифрование
+        SimpleStreamCipher decryptor(secret_key);
+        vector<char> decrypted = decryptor.process(encrypted);
+        string result(decrypted.begin(), decrypted.end());
 
-    if (equal(long_vector.begin(), long_vector.end(), decrypted.begin())) {
-        cout << "УСПЕХ: Длинный текст успешно зашифрован и расшифрован!" << endl;
-        cout << "Размер данных: " << long_text.size() << " байт" << endl;
+        if (text == result) {
+            cout << "Текст длиной " << text.length() << " символов -> УСПЕХ" << endl;
+        }
+        else {
+            cout << "ОШИБКА: текст длиной " << text.length() << " символов" << endl;
+        }
     }
-    else {
-        cout << "ОШИБКА: Проблема с шифрованием длинного текста!" << endl;
-    }
+    cout << endl;
 }

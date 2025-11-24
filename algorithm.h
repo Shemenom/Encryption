@@ -58,8 +58,8 @@ public:
     vector<char> process(const vector<char>& input);
 };
 
-void demonstrate_stream_cipher();
-void test_stream_performance();
-void printVector(const vector<char>& vec, const string& name);
+// Функции тестирования поточного шифрования 
+void test_stream_small_texts();
+void test_stream_large_texts();
 
 #endif
