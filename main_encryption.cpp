@@ -19,7 +19,6 @@ auto Time(Func&& func, Args&&... args) {
 }
 
 int main() {
-    // это тоже не трогать !!!
     cout << "=== ТЕСТИРОВАНИЕ СИСТЕМЫ ELGAMAL ===" << endl << endl;
 
     vector<long long> small_numbers = { 1, 42, 100, 255, 512, 999, 1024, 2048 };
@@ -30,10 +29,14 @@ int main() {
 
     cout << "=== ТЕСТИРОВАНИЕ ЗАВЕРШЕНО ===" << endl;
 
-    // Долгачева Александра
+    //// Долгачева Александра
     cout << "\n=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ ===" << endl;
     demonstrate_stream_cipher();
     test_stream_performance();
+
+    //Сагайдак Сергей
+    std::string message = "Secret Message";
+    demonstrateEncryption(message);
 
     return 0;
 
