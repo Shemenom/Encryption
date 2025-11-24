@@ -62,4 +62,34 @@ public:
 void test_stream_small_texts();
 void test_stream_large_texts();
 
+//Сагайдак Сергей (эднптичексие кривые)
+class SimpleECC {
+private:
+    int prime = 23;        // Простое число для модульной арифметики
+    int base_x = 5;        // Базовая точка на кривой (генератор)
+    int base_y = 1;
+    int private_key;       // Приватный (секретный) ключ
+    int public_x;          // Публичный ключ - x координата
+    int public_y;          // Публичный ключ - y координата
+
+public:
+    // Конструктор - создает пару ключей
+    SimpleECC(int secret);
+
+    // Вычисление общего секретного ключа с другим пользователем
+    int getSharedSecret(int other_public_x, int other_public_y);
+
+    // Геттеры для доступа к ключам
+    int getPrivateKey();
+    int getPublicX();
+    int getPublicY();
+};
+
+// Функция шифрования/дешифрования методом XOR
+std::string xorEncrypt(std::string text, int key);
+
+// Функция демонстрации шифрования
+void demonstrateEncryption(const std::string& message);
+
+
 #endif
