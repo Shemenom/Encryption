@@ -38,6 +38,13 @@ int main() {
     std::string message = "Secret Message";
     demonstrateEncryption(message);
 
+    // Шипкова Виктория (блочное шифрование RC6)
+    std::string message1 = "Hello";
+    std::string message2 = "Hello, world! This is my block cipher implementation program! Let's check how it works, I hope it's correct!!!";
+
+    block_cipher_RС6(message1);
+    block_cipher_RС6(message2);
+
     return 0;
 
 }

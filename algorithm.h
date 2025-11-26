@@ -127,4 +127,4 @@ public:
     std::vector<uint8_t> DecryptCBC(const std::vector<uint8_t>& ciphertext) const;
 };
 
-void block_cipher_RC6();
+void block_cipher_RC6(const std::string& message);
