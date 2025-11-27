@@ -58,9 +58,8 @@ public:
     vector<char> process(const vector<char>& input);
 };
 
-// Функции тестирования поточного шифрования 
-void test_stream_small_texts();
-void test_stream_large_texts();
+void demonstrateStreamCipher(const std::string& message);
+
 
 //Сагайдак Сергей (эднптичексие кривые)
 class SimpleECC {

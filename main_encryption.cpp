@@ -28,10 +28,12 @@ int main() {
 
     cout << "=== ТЕСТИРОВАНИЕ ЗАВЕРШЕНО ===" << endl;
 
-    //// Долгачева Александра
+    // Александра Долгачева - тестирование поточного шифрования
     cout << "\n=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ ===" << endl;
-    test_stream_small_texts();
-    test_stream_large_texts();
+
+    std::string message = "Secret Message";
+    demonstrateStreamCipher(message);
+
     cout << "=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ ЗАВЕРШЕНО ===" << endl;
 
     //Сагайдак Сергей
