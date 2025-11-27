@@ -45,20 +45,28 @@ void test_small_numbers(const std::vector<long long>& numbers_to_encrypt);
 void test_huge_numbers(const std::vector<long long>& numbers_to_encrypt);
 
 
-// Александра Долгачева (поточное шифрование)
+// Александра Долгачева (поточное шифрование ARC4)
 class SimpleStreamCipher {
 private:
-    unsigned long long current_state;
-    unsigned long long a, c, m;
+    vector<uint8_t> S; // S-блок 256 байт
+    int i, j;
 
-    char generateKeyByte();
+    void initialize(const vector<uint8_t>& key);
+    uint8_t generateKeyByte();
 
 public:
-    SimpleStreamCipher(unsigned long long seed);
+    SimpleStreamCipher(const string& key);
     vector<char> process(const vector<char>& input);
 };
 
-void demonstrateStreamCipher(const std::string& message);
+void demonstrateStreamCipher(const string& message);
+
+// Функция шифрования/дешифрования методом XOR
+string xorEncrypt(std::string text, int key);
+
+// Функция демонстрации шифрования
+void demonstrateEncryption(const string& message);
+
 
 
 //Сагайдак Сергей (эднптичексие кривые)
