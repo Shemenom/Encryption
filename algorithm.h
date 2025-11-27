@@ -92,3 +92,38 @@ void demonstrateEncryption(const std::string& message);
 
 
 #endif
+
+// Шипкова Виктория (блочное шифрование RC6)
+class RC6 {
+private:
+  
+    uint32_t ROTL(uint32_t x, uint32_t n) const;  
+    uint32_t ROTR(uint32_t x, uint32_t n) const;  
+
+    void KeyExpansion(const std::vector<uint8_t>& K); 
+
+    void BytesToBlock(const std::vector<uint8_t>& bytes, uint32_t block[4]) const;
+    void BlockToBytes(const uint32_t block[4], std::vector<uint8_t>& bytes) const;
+
+    std::vector<uint8_t> Pad(const std::vector<uint8_t>& data) const;
+    std::vector<uint8_t> Unpad(const std::vector<uint8_t>& data) const;
+    std::vector<uint8_t> GenerateIV() const;
+
+    static constexpr int w = 32;        
+    static constexpr int u = w / 8;     
+    static constexpr uint32_t lgw = 5;
+
+    int r;                    
+    std::vector<uint32_t> S;  
+
+public:
+    RC6(const std::vector<uint8_t>& K, int rounds = 20);
+
+    std::vector<uint8_t> EncryptBlock(const std::vector<uint8_t>& plaintext) const;
+    std::vector<uint8_t> DecryptBlock(const std::vector<uint8_t>& ciphertext) const;
+
+    std::vector<uint8_t> EncryptCBC(const std::vector<uint8_t>& plaintext) const;
+    std::vector<uint8_t> DecryptCBC(const std::vector<uint8_t>& ciphertext) const;
+};
+
+void block_cipher_RC6(const std::string& message);
