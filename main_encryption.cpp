@@ -47,6 +47,11 @@ int main() {
     block_cipher_RС6(message1);
     block_cipher_RС6(message2);
 
+    // Бардин Глеб
+    processRSA("HELLO WORLD");
+    processRSA("SECRET MESSAGE");
+    processRSA("TEST 123");
+
     return 0;
 
 }
