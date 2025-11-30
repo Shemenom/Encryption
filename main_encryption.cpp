@@ -52,6 +52,15 @@ int main() {
     processRSA("SECRET MESSAGE");
     processRSA("TEST 123");
 
+    // Бурханов Тахир
+    string a(1000, '0');
+    string b(1000000, '0');
+    test_encryption("Hello, World!", "mysecretkey");
+    cout << endl;
+    test_encryption(a, "mysecretkey");
+    cout << endl;
+    test_encryption(b, "mysecretkey");
+
     return 0;
 
 }
