@@ -169,3 +169,23 @@ void processRSA(const std::string& message);
 void processRSA(const std::string& message, 
                 const std::pair<long long, long long>& publicKey,
                 const std::pair<long long, long long>& privateKey);
+
+// Бурханов Тахир
+
+class SimpleAES {
+private:
+    vector<unsigned char> key;
+    void prepare_key();
+    void xor_with_key(vector<unsigned char>& data);
+    void substitute_bytes(vector<unsigned char>& data);
+    void shift_data(vector<unsigned char>& data);
+
+public:
+    SimpleAES(const string& key_str);
+    vector<unsigned char> encrypt(const vector<unsigned char>& input);
+    vector<unsigned char> decrypt(const vector<unsigned char>& input);
+};
+
+string aes_encrypt(const string& plaintext, const string& key);
+string aes_decrypt(const string& ciphertext, const string& key);
+void test_encryption(const string& text, const string& key);
