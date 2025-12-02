@@ -28,10 +28,12 @@ int main() {
 
     cout << "=== ТЕСТИРОВАНИЕ ЗАВЕРШЕНО ===" << endl;
 
-    //// Долгачева Александра
-    cout << "\n=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ ===" << endl;
-    test_stream_small_texts();
-    test_stream_large_texts();
+    /// Александра Долгачева - тестирование поточного шифрования ARC4
+    cout << "\n=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ (ARC4) ===" << endl;
+
+    std::string message = "Secret Message";
+    demonstrateStreamCipher(message);
+
     cout << "=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ ЗАВЕРШЕНО ===" << endl;
 
     //Сагайдак Сергей
@@ -44,6 +46,20 @@ int main() {
 
     block_cipher_RС6(message1);
     block_cipher_RС6(message2);
+
+    // Бардин Глеб
+    processRSA("HELLO WORLD");
+    processRSA("SECRET MESSAGE");
+    processRSA("TEST 123");
+
+    // Бурханов Тахир
+    string a(1000, '0');
+    string b(1000000, '0');
+    test_encryption("Hello, World!", "mysecretkey");
+    cout << endl;
+    test_encryption(a, "mysecretkey");
+    cout << endl;
+    test_encryption(b, "mysecretkey");
 
     return 0;
 
