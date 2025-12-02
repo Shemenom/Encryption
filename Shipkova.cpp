@@ -160,10 +160,10 @@ vector<uint8_t> RC6::Unpad(const vector<uint8_t>& data) const {
 
 vector<uint8_t> RC6::GenerateIV() const {
     vector<uint8_t> iv(16);
-    srand(static_cast<unsigned int>(time(nullptr)));
-    for (int i = 0; i < 16; ++i) {
-        iv[i] = rand() % 256; 
-    }
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(0, 255);
+    for (auto& b : iv) b = dis(gen);
     return iv;
 }
 
