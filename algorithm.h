@@ -45,22 +45,21 @@ void test_small_numbers(const std::vector<long long>& numbers_to_encrypt);
 void test_huge_numbers(const std::vector<long long>& numbers_to_encrypt);
 
 
-// Александра Долгачева (поточное шифрование ARC4)
+// Александра Долгачева (поточное шифрование)
 class SimpleStreamCipher {
 private:
     vector<uint8_t> S; // массив из 256 беззнаковых 8-битных чисел, S-блок 256 байт
-    int i = 0;
-    int j = 0;
-    void initialize(const vector<uint8_t>& key); // принимает константную ссылку на массив ключа
+    int i, j;
+
+    void initialize(const vector<uint8_t>& key);  // принимает константную ссылку на массив ключа
     uint8_t generateKeyByte();  // uint8_t - возвращает один байт (0-255) ключевого потока
 
 public:
-    SimpleStreamCipher(const string& key);
+    SimpleStreamCipher(const std::string& key);
     vector<char> process(const vector<char>& input);
 };
 
-void demonstrateStreamCipher(const string& message0);
-
+void demonstrateStreamCipher(const std::string& message0);
 
 
 //Сагайдак Сергей (эднптичексие кривые)
@@ -102,30 +101,50 @@ private:
     uint32_t ROTL(uint32_t x, uint32_t n) const;  
     uint32_t ROTR(uint32_t x, uint32_t n) const;  
 
-    void KeyExpansion(const std::vector<uint8_t>& K); 
+    void KeyExpansion(const vector<uint8_t>& K); 
 
-    void BytesToBlock(const std::vector<uint8_t>& bytes, uint32_t block[4]) const;
-    void BlockToBytes(const uint32_t block[4], std::vector<uint8_t>& bytes) const;
+    void BytesToBlock(const vector<uint8_t>& bytes, uint32_t block[4]) const;
+    void BlockToBytes(const uint32_t block[4], vector<uint8_t>& bytes) const;
 
-    std::vector<uint8_t> Pad(const std::vector<uint8_t>& data) const;
-    std::vector<uint8_t> Unpad(const std::vector<uint8_t>& data) const;
-    std::vector<uint8_t> GenerateIV() const;
+    vector<uint8_t> Pad(const vector<uint8_t>& data) const;
+    vector<uint8_t> Unpad(const vector<uint8_t>& data) const;
+    vector<uint8_t> GenerateIV() const;
 
     static constexpr int w = 32;        
     static constexpr int u = w / 8;     
     static constexpr uint32_t lgw = 5;
 
     int r;                    
-    std::vector<uint32_t> S;  
+    vector<uint32_t> S;  
 
 public:
-    RC6(const std::vector<uint8_t>& K, int rounds = 20);
+    RC6(const vector<uint8_t>& K, int rounds = 20);
 
-    std::vector<uint8_t> EncryptBlock(const std::vector<uint8_t>& plaintext) const;
-    std::vector<uint8_t> DecryptBlock(const std::vector<uint8_t>& ciphertext) const;
+    vector<uint8_t> EncryptBlock(const vector<uint8_t>& plaintext) const;
+    vector<uint8_t> DecryptBlock(const vector<uint8_t>& ciphertext) const;
 
-    std::vector<uint8_t> EncryptCBC(const std::vector<uint8_t>& plaintext) const;
-    std::vector<uint8_t> DecryptCBC(const std::vector<uint8_t>& ciphertext) const;
+    vector<uint8_t> EncryptCBC(const vector<uint8_t>& plaintext) const;
+    vector<uint8_t> DecryptCBC(const vector<uint8_t>& ciphertext) const;
 };
 
-void block_cipher_RC6(const std::string& message);
+void block_cipher_RC6(const string& message);
+
+// Павел Водопьянов 
+class ECB {
+private:
+    void (*encrypt_block)(const vector<uint8_t>&, vector<uint8_t>&, const vector<uint8_t>&);
+    void (*decrypt_block)(const vector<uint8_t>&, vector<uint8_t>&, const vector<uint8_t>&);
+    int block_size;
+    vector<uint8_t> key;
+
+public:
+    ECB(void (*enc_func)(const vector<uint8_t>&, vector<uint8_t>&, const vector<uint8_t>&), 
+        void (*dec_func)(const vector<uint8_t>&, vector<uint8_t>&, const vector<uint8_t>&),
+        const vector<uint8_t>& key_data, int blk_size = 16);
+    
+    vector<uint8_t> encrypt(const vector<uint8_t>& data);
+    vector<uint8_t> decrypt(const vector<uint8_t>& data);
+};
+
+// Объявление тестовой функции
+void test_ecb_rc6(const string& input_str, const vector<uint8_t>& key);
