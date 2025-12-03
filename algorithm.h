@@ -128,3 +128,23 @@ public:
 };
 
 void block_cipher_RC6(const string& message);
+
+// Павел Водопьянов 
+class ECB {
+private:
+    void (*encrypt_block)(const vector<uint8_t>&, vector<uint8_t>&, const vector<uint8_t>&);
+    void (*decrypt_block)(const vector<uint8_t>&, vector<uint8_t>&, const vector<uint8_t>&);
+    int block_size;
+    vector<uint8_t> key;
+
+public:
+    ECB(void (*enc_func)(const vector<uint8_t>&, vector<uint8_t>&, const vector<uint8_t>&), 
+        void (*dec_func)(const vector<uint8_t>&, vector<uint8_t>&, const vector<uint8_t>&),
+        const vector<uint8_t>& key_data, int blk_size = 16);
+    
+    vector<uint8_t> encrypt(const vector<uint8_t>& data);
+    vector<uint8_t> decrypt(const vector<uint8_t>& data);
+};
+
+// Объявление тестовой функции
+void test_ecb_rc6(const string& input_str, const vector<uint8_t>& key);

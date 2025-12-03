@@ -210,8 +210,8 @@ vector<uint8_t> RC6::DecryptCBC(const vector<uint8_t>& ciphertext) const {
     return Unpad(plaintext);
 }
 
-void block_cipher_RÑ6(const std::string& message) {
-    cout << "\n=== ÄÅÌÎÍÑÒÐÀÖÈß ÁËÎ×ÍÎÃÎ ØÈÔÐÎÂÀÍÈß RC6 ===" << endl;
+void block_cipher_RC6(const std::string& message) {
+    cout << "\n=== ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RC6 ===" << endl;
 
     vector<uint8_t> K(32);
     for (int i = 0; i < 32; ++i) {
@@ -220,22 +220,22 @@ void block_cipher_RÑ6(const std::string& message) {
 
     RC6 cipher(K, 20);
 
-    cout << "Èñõîäíîå ñîîáùåíèå: " << message << endl;
+    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " << message << endl;
 
     vector<uint8_t> plaintext(message.begin(), message.end());
 
     auto ciphertext = cipher.EncryptCBC(plaintext);
-    cout << "Ñîîáùåíèå çàøèôðîâàíî â ðåæèìå CBC" << endl;
+    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ CBC" << endl;
 
     auto decrypted = cipher.DecryptCBC(ciphertext);
     string result(decrypted.begin(), decrypted.end());
 
-    cout << "Ðàñøèôðîâàííîå ñîîáùåíèå: " << result << endl;
+    cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " << result << endl;
 
     if (plaintext == decrypted) {
-        cout << "ØÈÔÐÎÂÀÍÈÅ RC6 ÐÀÁÎÒÀÅÒ ÊÎÐÐÅÊÒÍÎ" << endl;
+        cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RC6 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << endl;
     }
     else {
-        cout << "ÎØÈÁÊÀ Â ØÈÔÐÎÂÀÍÈÈ RC6" << endl;
+        cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RC6" << endl;
     }
 }
