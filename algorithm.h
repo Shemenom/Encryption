@@ -48,24 +48,18 @@ void test_huge_numbers(const std::vector<long long>& numbers_to_encrypt);
 // Александра Долгачева (поточное шифрование ARC4)
 class SimpleStreamCipher {
 private:
-    vector<uint8_t> S; // S-блок 256 байт
-    int i, j;
-
-    void initialize(const vector<uint8_t>& key);
-    uint8_t generateKeyByte();
+    vector<uint8_t> S; // массив из 256 беззнаковых 8-битных чисел, S-блок 256 байт
+    int i = 0;
+    int j = 0;
+    void initialize(const vector<uint8_t>& key); // принимает константную ссылку на массив ключа
+    uint8_t generateKeyByte();  // uint8_t - возвращает один байт (0-255) ключевого потока
 
 public:
     SimpleStreamCipher(const string& key);
     vector<char> process(const vector<char>& input);
 };
 
-void demonstrateStreamCipher(const string& message);
-
-// Функция шифрования/дешифрования методом XOR
-string xorEncrypt(std::string text, int key);
-
-// Функция демонстрации шифрования
-void demonstrateEncryption(const string& message);
+void demonstrateStreamCipher(const string& message0);
 
 
 

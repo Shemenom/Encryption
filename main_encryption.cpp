@@ -31,10 +31,8 @@ int main() {
     /// Александра Долгачева - тестирование поточного шифрования ARC4
     cout << "\n=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ (ARC4) ===" << endl;
 
-    std::string message = "Secret Message";
+    string message0 = "Secret Message";
     demonstrateStreamCipher(message);
-
-    cout << "=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ ЗАВЕРШЕНО ===" << endl;
 
     //Сагайдак Сергей
     std::string message = "Secret Message";
