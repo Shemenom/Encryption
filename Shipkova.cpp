@@ -220,7 +220,12 @@ void block_cipher_RС6(const std::string& message) {
 
     RC6 cipher(K, 20);
 
-    cout << "Исходное сообщение: " << message << endl;
+    if (message.size() < 40) {
+        cout << "Исходное сообщение: " << message << endl;
+    }
+    else {
+        cout << "Исходное сообщение: ..." << endl;
+    }
 
     vector<uint8_t> plaintext(message.begin(), message.end());
 
@@ -230,7 +235,12 @@ void block_cipher_RС6(const std::string& message) {
     auto decrypted = cipher.DecryptCBC(ciphertext);
     string result(decrypted.begin(), decrypted.end());
 
-    cout << "Расшифрованное сообщение: " << result << endl;
+    if (result.size() <= 40) {
+        cout << "Расшифрованное сообщение: " << result << endl;
+    }
+    else {
+        cout << "Расшифрованное сообщение: ..." << endl;
+    }
 
     if (plaintext == decrypted) {
         cout << "ШИФРОВАНИЕ RC6 РАБОТАЕТ КОРРЕКТНО" << endl;
