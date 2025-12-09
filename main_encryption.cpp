@@ -32,7 +32,7 @@ int main() {
     cout << "\n=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ (ARC4) ===" << endl;
 
     string message0 = "Secret Message";
-    demonstrateStreamCipher(message);
+    demonstrateStreamCipher(message0);
 
     //Сагайдак Сергей
     std::string message = "Secret Message";

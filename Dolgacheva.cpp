@@ -16,6 +16,7 @@ void SimpleStreamCipher::initialize(const vector<uint8_t>& key) {  // ссылка на 
         j = (j + S[i] + key[i % key.size()]) % 256;
         swap(S[i], S[j]);
     }
+    i = j = 0;
 }
 
 // Генерация следующего байта ключевого потока
