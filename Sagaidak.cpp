@@ -49,22 +49,9 @@ void demonstrateEncryption(const std::string& message) {
     SimpleECC user1(7);
     SimpleECC user2(13);
 
-    // Показываем ключи
-    cout << "Ключи пользователя 1:" << endl;
-    cout << "Приватный: " << user1.getPrivateKey() << endl;
-    cout << "Публичный: (" << user1.getPublicX() << ", " << user1.getPublicY() << ")" << endl << endl;
-
-    cout << "Ключи пользователя 2:" << endl;
-    cout << "Приватный: " << user2.getPrivateKey() << endl;
-    cout << "Публичный: (" << user2.getPublicX() << ", " << user2.getPublicY() << ")" << endl << endl;
-
     // Вычисляем общий секрет
     int secret1 = user1.getSharedSecret(user2.getPublicX(), user2.getPublicY());
     int secret2 = user2.getSharedSecret(user1.getPublicX(), user1.getPublicY());
-
-    cout << "Общий секрет пользователя 1: " << secret1 << endl;
-    cout << "Общий секрет пользователя 2: " << secret2 << endl;
-    cout << "Секреты совпадают: " << (secret1 == secret2 ? "Да" : "Нет") << endl << endl;
 
     // Шифрование и дешифрование
     cout << "Исходное сообщение: " << message << endl;
