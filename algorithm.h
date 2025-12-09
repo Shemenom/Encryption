@@ -129,6 +129,63 @@ public:
 
 void block_cipher_RC6(const string& message);
 
+// Бардин Глеб
+
+class RSA {
+public:
+    // Генерация ключей
+    static std::pair<std::pair<long long, long long>, std::pair<long long, long long>> generateKeys();
+
+    // Шифрование строки
+    static std::string encrypt(const std::string& message, const std::pair<long long, long long>& publicKey);
+
+    // Дешифрование строки с проверкой
+    static std::string decrypt(const std::string& encrypted, const std::pair<long long, long long>& privateKey, const std::string& original = "");
+
+    // Шифрование числа
+    static long long encrypt(long long message, const std::pair<long long, long long>& publicKey);
+
+    // Дешифрование числа
+    static long long decrypt(long long encrypted, const std::pair<long long, long long>& privateKey);
+
+private:
+    // Математические функции для RSA
+    static bool isPrime(long long n);
+    static long long gcd(long long a, long long b);
+    static long long modPow(long long base, long long exponent, long long mod);
+    static long long modInverse(long long a, long long m);
+    static long long generatePrime();
+};
+
+// Функции обработки (добавляем в algorithm.h)
+void processRSA(const std::string& message);
+void processRSA(const std::string& message, 
+                const std::pair<long long, long long>& publicKey,
+                const std::pair<long long, long long>& privateKey);
+
+#endif
+
+//Бурханов Тахир
+
+class SimpleAES {
+private:
+    vector<unsigned char> key;
+    void prepare_key();
+    void xor_with_key(vector<unsigned char>& data);
+    void substitute_bytes(vector<unsigned char>& data);
+    void shift_data(vector<unsigned char>& data);
+
+public:
+    SimpleAES(const string& key_str);
+    vector<unsigned char> encrypt(const vector<unsigned char>& input);
+    vector<unsigned char> decrypt(const vector<unsigned char>& input);
+};
+
+string aes_encrypt(const string& plaintext, const string& key);
+string aes_decrypt(const string& ciphertext, const string& key);
+void test_encryption(const string& text, const string& key);
+
+
 // Павел Водопьянов 
 class ECB {
 private:
