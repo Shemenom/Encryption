@@ -18,6 +18,7 @@ void SimpleStreamCipher::initialize(const vector<uint8_t>& key) { // ссылка на м
     }
 }
 
+
 // Генерация следующего байта ключевого потока
 uint8_t SimpleStreamCipher::generateKeyByte() {  // возвращаемый тип: беззнаковое 8-битное число (0-255)
     i = (i + 1) % 256;
