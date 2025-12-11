@@ -170,8 +170,3 @@ void processRSA(const string& message,
     cout << "Decrypted: " << decrypted << endl;
     cout << "=== COMPLETE ===" << endl << endl;
 }
-
-// Перегрузка для автоматической генерации ключей
-void processRSA(const string& message) {
-    processRSA(message, {0, 0}, {0, 0});
-}

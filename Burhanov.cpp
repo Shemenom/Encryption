@@ -1,4 +1,4 @@
-#include "aes.h"
+#include "algorithm.h"
 #include <iostream>
 
 void SimpleAES::prepare_key() {

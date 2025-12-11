@@ -91,9 +91,6 @@ std::string xorEncrypt(std::string text, int key);
 // Функция демонстрации шифрования
 void demonstrateEncryption(const std::string& message);
 
-
-#endif
-
 // Шипкова Виктория (блочное шифрование RC6)
 class RC6 {
 private:
@@ -158,12 +155,10 @@ private:
 };
 
 // Функции обработки (добавляем в algorithm.h)
-void processRSA(const std::string& message);
 void processRSA(const std::string& message, 
                 const std::pair<long long, long long>& publicKey,
                 const std::pair<long long, long long>& privateKey);
 
-#endif
 
 //Бурханов Тахир
 
@@ -205,3 +200,7 @@ public:
 
 // Объявление тестовой функции
 void test_ecb_rc6(const string& input_str, const vector<uint8_t>& key);
+
+
+
+#endif

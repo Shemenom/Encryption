@@ -18,46 +18,71 @@ auto Time(Func&& func, Args&&... args) {
 }
 
 int main() {
+    // Хлебников Матвей
     cout << "=== ТЕСТИРОВАНИЕ СИСТЕМЫ ELGAMAL ===" << endl << endl;
 
     vector<long long> small_numbers = { 1, 42, 100, 255, 512, 999, 1024, 2048 };
-    test_small_numbers(small_numbers);
+    vector<long long> huge_numbers = { 1000000000, 1500000000 };
 
-    vector<long long> huge_numbers = { 1000000000, 2500000000 };
-    test_huge_numbers(huge_numbers);
+    cout << Time(test_small_numbers, small_numbers).count() << " - время выполнения в мкс" << endl;
+    cout << Time(test_huge_numbers, huge_numbers).count() << " - время выполнения в мкс" << endl;
 
     cout << "=== ТЕСТИРОВАНИЕ ЗАВЕРШЕНО ===" << endl;
 
     /// Александра Долгачева - тестирование поточного шифрования ARC4
     cout << "\n=== ТЕСТИРОВАНИЕ ПОТОЧНОГО ШИФРОВАНИЯ (ARC4) ===" << endl;
 
-    string message0 = "Secret Message";
-    demonstrateStreamCipher(message0);
+    string message9 = "Secret Message";
+    string message_1111(1000, '0');
+    string message_2222(1000000, '0');
+
+    cout << Time(demonstrateStreamCipher, message9).count() << " - время выполнения в мкс"<< endl;
+    cout << Time(demonstrateStreamCipher, message_1111).count() << " - время выполнения в мкс"<< endl;
+    cout << Time(demonstrateStreamCipher, message_2222).count() << " - время выполнения в мкс"<< endl;
+
+    cout << "=== ТЕСТИРОВАНИЕ ЗАВЕРШЕНО ===\n\n";
 
     //Сагайдак Сергей
-    std::string message = "Secret Message";
-    demonstrateEncryption(message);
+    string message_0 = "Secret Message";
+    string message_1(1000, '0');
+    string message_2(1000000, '0');
+
+    cout << Time(demonstrateEncryption, message_0).count() << " - время выполнения в мкс"<< endl;
+    cout << Time(demonstrateEncryption, message_1).count() << " - время выполнения в мкс"<< endl;
+    cout << Time(demonstrateEncryption, message_2).count() << " - время выполнения в мкс"<< endl;
 
     // Шипкова Виктория (блочное шифрование RC6)
     string message1 = "Hello, world!";
-    string message2 = "Hello, world! This is my block cipher implementation program! Let's check how it works, I hope it's correct!!!Hello, world! This is my block cipher implementation program! Let's check how it works, I hope it's correct!!!Hello, world! This is my block cipher implementation program! Let's check how it works, I hope it's correct!!!Hello, world! This is my block cipher implementation program! Let's check how it works, I hope it's correct!!!Hello, world! This is my block cipher implementation program! Let's check how it works, I hope it's correct!!!Hello, world! This is my block cipher implementation program! Let's check how it works, I hope it's correct!!!";
+    string message2(1000, '0');
+    string message3(1000000, '0');
+    cout << Time(block_cipher_RC6,message1).count() << " - время выполнения в мкс"<< endl;;
+    cout << Time(block_cipher_RC6,message2).count() << " - время выполнения в мкс"<< endl;;
+    cout << Time(block_cipher_RC6,message2).count() << " - время выполнения в мкс"<< endl;;
 
-    block_cipher_RC6(message1);
-    block_cipher_RC6(message2);
-
+    
     // Бардин Глеб
-    processRSA("HELLO WORLD");
-    processRSA("SECRET MESSAGE");
-    processRSA("TEST 123");
+    cout << "\n=== ТЕСТИРОВАНИЕ АЛГОРИТМА RSA \n";
+    string text(1000000, '0');
+    string text2(1000, '0');
+    pair<long long, long long> publicKey = make_pair(0, 0);
+    pair<long long, long long> privateKey = make_pair(0, 0);
+
+    cout << Time(processRSA, "HELLO WORLD", publicKey, privateKey).count() << " - время выполнения в мкс"<< endl;
+    cout << Time(processRSA, text2, publicKey, privateKey).count() << " - время выполнения в мкс"<< endl;
+    cout << Time(processRSA, text, publicKey, privateKey).count() << " - время выполнения в мкс"<< endl;
+
+    cout << "=== ТЕСТИРОВАНИЕ ЗАВЕРШЕНО ===\n\n";
 
     // Бурханов Тахир
+    cout << "=== ТЕСТИРОВАНИЕ AES === \n";
+
     string a(1000, '0');
     string b(1000000, '0');
-    test_encryption("Hello, World!", "mysecretkey");
-    cout << endl;
-    test_encryption(a, "mysecretkey");
-    cout << endl;
-    test_encryption(b, "mysecretkey");
+    cout << Time(test_encryption,"Hello, World!", "mysecretkey").count() << " - время выполнения в мск \n"<< endl;
+    cout << Time(test_encryption, a, "mysecretkey").count() << " - время выполнения в мск \n" << endl;
+    cout << Time(test_encryption, b, "mysecretkey").count() << " - время выполнения в мск \n"<< endl;
+
+    cout << "=== КОНЕЦ ТЕСТИРОВАНИЕ AES ===\n"; 
 
     // Павел Водопьянов
     vector<uint8_t> key16 = {0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
@@ -74,11 +99,12 @@ int main() {
     
     cout << "=== ТЕСТИРОВАНИЕ РЕЖИМА ECB С RC6 ===" << endl << endl;
     
-    test_ecb_rc6("Hello, World!", key16);
-    test_ecb_rc6("Test message for ECB mode", key24);
-    test_ecb_rc6("Short", key32);
-    test_ecb_rc6("This is a longer message to test ECB mode with RC6 encryption", key16);
+    string message_123(1000000, '0');
+    string message_121212(1000, '0');
+
+    cout << Time(test_ecb_rc6,"Hello, World!", key16).count() << " - время выполнения в мкс \n"<< endl;
+    cout << Time(test_ecb_rc6, "Short", key32).count() << " - время выполнения в мкс \n" << endl;
+    cout << Time(test_ecb_rc6, message_123, key24).count() << " - время выполнения в мкс \n"<< endl; 
 
     return 0;
-
 }
