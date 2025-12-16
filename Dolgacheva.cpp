@@ -4,6 +4,12 @@
 #include "algorithm.h"
 using namespace std;
 
+// Конструктор - принимает строковый ключ (key - переменная в которой хранится ключ)
+SimpleStreamCipher::SimpleStreamCipher(const string& key) : i(0), j(0) {  // Инициализирует поля класса i и j значением 0
+    vector<uint8_t> key_data(key.begin(), key.end());  // Создаёт локальную переменную key_data типа vector<uint8_t>, преобразовывает ключ в байты
+    initialize(key_data);
+}
+
 // Инициализация S-блока на основе ключа
 void SimpleStreamCipher::initialize(const vector<uint8_t>& key) { // ссылка на массив байтов ключа
     S.resize(256); //устанавливает размер массива 256 элементов
@@ -18,7 +24,6 @@ void SimpleStreamCipher::initialize(const vector<uint8_t>& key) { // ссылка на м
     }
 }
 
-
 // Генерация следующего байта ключевого потока
 uint8_t SimpleStreamCipher::generateKeyByte() {  // возвращаемый тип: беззнаковое 8-битное число (0-255)
     i = (i + 1) % 256;
@@ -27,15 +32,9 @@ uint8_t SimpleStreamCipher::generateKeyByte() {  // возвращаемый тип: беззнаково
     return S[(S[i] + S[j]) % 256];
 }
 
-// Конструктор - принимает строковый ключ
-SimpleStreamCipher::SimpleStreamCipher(const string& key) : i(0), j(0) {
-    vector<uint8_t> key_data(key.begin(), key.end());  // преобразовывает ключ в байты
-    initialize(key_data);
-}
-
 // Шифрование/дешифрование
 vector<char> SimpleStreamCipher::process(const vector<char>& input) {
-    // ВАЖНО: Сбрасываем состояние перед обработкой!
+    // Сбрасываем состояние перед обработкой!
     i = 0;
     j = 0;
     vector<char> output; // Создание выходного массива
@@ -50,35 +49,57 @@ vector<char> SimpleStreamCipher::process(const vector<char>& input) {
 }
 
 // Функция демонстрации поточного шифрования ARC4
-void demonstrateStreamCipher(const std::string& message0) {
+void demonstrateStreamCipher(const string& message0) {
 
     string secret_key = "MySecretKey123"; // Строковый ключ вместо числа
 
-    cout << "Исходное сообщение: " << message0 << endl;
+    cout << "Исходное сообщение: ";
+    if (message0.length() > 40) {
+        cout << message0.substr(0, 40) << "... (" << message0.length() << " символов)";
+    }
+    else {
+        cout << message0;
+    }
+    cout << endl;
     cout << "Секретный ключ: " << secret_key << endl << endl;
 
     // Шифрование
-    SimpleStreamCipher encryptor(secret_key);
-    vector<char> text_vector(message0.begin(), message0.end());
-    vector<char> encrypted = encryptor.process(text_vector);
+    SimpleStreamCipher encryptor(secret_key); // вызов конструктора класса, encryptor - переменная хранит объект шифратора
+    vector<char> text_vector(message0.begin(), message0.end()); // преобразование строки в вектор символов
+    vector<char> encrypted = encryptor.process(text_vector);  // vector<char> encrypted - переменная для результата шифрования
 
     cout << "Зашифрованные байты: ";
-    for (char c : encrypted) {
-        cout << (int)(unsigned char)c << " ";
+    for (size_t i = 0; i < encrypted.size(); i++) {
+        if (i >= 40) {
+            cout << "... (" << encrypted.size() << " байт)";
+            break;
+        }
+        cout << (int)(unsigned char)encrypted[i] << " "; // сложное преобразование типа переменной
     }
     cout << endl;
 
     // Дешифрование (создаем новый объект с тем же ключом)
     SimpleStreamCipher decryptor(secret_key);
-    vector<char> decrypted = decryptor.process(encrypted);
+    vector<char> decrypted = decryptor.process(encrypted); // vector<char> decrypted - результат дешифрования
     string result(decrypted.begin(), decrypted.end());
 
-    cout << "Расшифрованное сообщение: " << result << endl;
+    cout << "Расшифрованное сообщение: ";
+    if (result.length() > 40) {
+        cout << result.substr(0, 40) << "... (" << result.length() << " символов)";
+    }
+    else {
+        cout << result;
+    }
+    cout << endl;
 
     // Для отладки - выведем байты расшифрованного текста
     cout << "Расшифрованные байты как числа: ";
-    for (char c : decrypted) {
-        cout << (int)(unsigned char)c << " ";
+    for (size_t i = 0; i < decrypted.size(); i++) {
+        if (i >= 40) {
+            cout << "... (" << decrypted.size() << " байт)";
+            break;
+        }
+        cout << (int)(unsigned char)decrypted[i] << " ";
     }
     cout << endl;
 
