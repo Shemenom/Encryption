@@ -150,28 +150,52 @@ string RSA::decrypt(const string& encrypted, const pair<long long, long long>& p
 
 // ========== РЕАЛИЗАЦИЯ ФУНКЦИЙ ОБРАБОТКИ ==========
 
-void processRSA(const string& message, 
-                const pair<long long, long long>& publicKey,
-                const pair<long long, long long>& privateKey) {
-    
-    cout << "\n=== RSA PROCESSING ===" << endl;
-    cout << "Input: " << message << endl;
-    
-    auto keys = (publicKey.first == 0) ? RSA::generateKeys() : make_pair(publicKey, privateKey);
-    auto pubKey = keys.first;
-    auto privKey = keys.second;
-    
-    cout << "Public key: (" << pubKey.first << ", " << pubKey.second << ")" << endl;
-    
-    string encrypted = RSA::encrypt(message, pubKey);
-    string decrypted = RSA::decrypt(encrypted, privKey, message);
-    
-    cout << "Encrypted: " << encrypted << endl;
-    cout << "Decrypted: " << decrypted << endl;
-    cout << "=== COMPLETE ===" << endl << endl;
+void processRSA(const string& message,  
+                const pair<long long, long long>& publicKey, 
+                const pair<long long, long long>& privateKey) { 
+     
+    cout << "\n=== RSA PROCESSING ===" << endl; 
+     
+    // Показываем только начало исходного сообщения 
+    cout << "Исходное сообщение: "; 
+    if (message.length() > 40) { 
+        cout << message.substr(0, 40) << "... (" << message.length() << " символов)" << endl; 
+    } else { 
+        cout << message << endl; 
+    } 
+     
+    auto keys = (publicKey.first == 0) ? RSA::generateKeys() : make_pair(publicKey, privateKey); 
+    auto pubKey = keys.first; 
+    auto privKey = keys.second; 
+     
+    cout << "Публичный ключ: (" << pubKey.first << ", " << pubKey.second << ")" << endl; 
+     
+    string encrypted = RSA::encrypt(message, pubKey); 
+    string decrypted = RSA::decrypt(encrypted, privKey, message); 
+     
+    // Показываем только начало зашифрованных данных 
+    cout << "Зашифрованные данные: "; 
+    if (encrypted.length() > 40) { 
+        cout << encrypted.substr(0, 40) << "... (" << encrypted.length() << " символов)" << endl; 
+    } else { 
+        cout << encrypted << endl; 
+    } 
+     
+    // Показываем только начало расшифрованных данных 
+    cout << "Расшифрованное сообщение: "; 
+    if (decrypted.length() > 40) { 
+        cout << decrypted.substr(0, 40) << "... (" << decrypted.length() << " символов)" << endl; 
+    } else { 
+        cout << decrypted << endl; 
+    } 
+     
+    // Проверка 
+    cout << "Результат: " << (message == decrypted ? "УСПЕХ" : "ОШИБКА") << endl; 
+    cout << "=== ЗАВЕРШЕНО ===" << endl << endl; 
 }
 
 // Перегрузка для автоматической генерации ключей
 void processRSA(const string& message) {
     processRSA(message, {0, 0}, {0, 0});
 }
+
