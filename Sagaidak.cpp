@@ -43,27 +43,42 @@ std::string xorEncrypt(std::string text, int key) {
 
 // Функция демонстрации шифрования
 void demonstrateEncryption(const std::string& message) {
-    cout << "=== ДЕМОНСТРАЦИЯ ШИФРОВАНИЯ ECC ===" << endl << endl;
-
-    // Создаем двух пользователей
+    // Создаем два пользователя
     SimpleECC user1(7);
     SimpleECC user2(13);
 
-    // Вычисляем общий секрет
+    // Вычисляем общие секреты
     int secret1 = user1.getSharedSecret(user2.getPublicX(), user2.getPublicY());
     int secret2 = user2.getSharedSecret(user1.getPublicX(), user1.getPublicY());
 
     // Шифрование и дешифрование
-    cout << "Исходное сообщение: " << message << endl;
+    if (message.size() < 40) {
+        cout << "Исходное сообщение: " << message << endl;
+    }
+    else {
+        cout << "Исходное сообщение: ..." << endl;
+    }
 
     string encrypted = xorEncrypt(message, secret1);
     cout << "Зашифрованное сообщение: ";
-    for (char c : encrypted) cout << (int)c << " ";
+    if (encrypted.size() < 40) {
+        for (char c : encrypted) cout << (int)c << " ";
+    }
+    else {
+        cout << " ... ";
+    }
     cout << endl;
 
     string decrypted = xorEncrypt(encrypted, secret2);
-    cout << "Расшифрованное сообщение: " << decrypted << endl;
 
-    // Сравнение результатов
-    cout << endl << "Сравнение: " << (message == decrypted ? "УСПЕХ - сообщения идентичны!" : "ОШИБКА - сообщения разные!") << endl;
+    if (encrypted.size() < 40) {
+        cout << "Расшифрованное сообщение: " << decrypted << endl;
+
+    }
+    else {
+        cout << "Расшифрованное сообщение: ... " << endl;
+    }
+
+    // Проверка корректности
+    cout << endl << "Результат: " << (message == decrypted ? "Успех - сообщение восстановлено!" : "Ошибка - сообщение не совпадает!") << endl;
 }
