@@ -66,23 +66,20 @@ void demonstrateStreamCipher(const std::string& message0);
 class SimpleECC {
 private:
     int prime = 23;        // Простое число для модульной арифметики
-    int base_x = 5;        // Базовая точка на кривой (генератор)
-    int base_y = 1;
+    int base_x = 5;        // Базовая точка (только x)
     int private_key;       // Приватный (секретный) ключ
-    int public_x;          // Публичный ключ - x координата
-    int public_y;          // Публичный ключ - y координата
+    int public_key;        // Публичный ключ
 
 public:
     // Конструктор - создает пару ключей
     SimpleECC(int secret);
 
     // Вычисление общего секретного ключа с другим пользователем
-    int getSharedSecret(int other_public_x, int other_public_y);
+    int getSharedSecret(int other_public_key);
 
     // Геттеры для доступа к ключам
     int getPrivateKey();
-    int getPublicX();
-    int getPublicY();
+    int getPublicKey();
 };
 
 // Функция шифрования/дешифрования методом XOR
@@ -90,9 +87,6 @@ std::string xorEncrypt(std::string text, int key);
 
 // Функция демонстрации шифрования
 void demonstrateEncryption(const std::string& message);
-
-
-#endif
 
 // Шипкова Виктория (блочное шифрование RC6)
 class RC6 {
